@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>BINGO</title>
+<style>
+body {
+  text-align:center; 
+  vertical-align:middle; 
+  font-weight:bold; 
+  font-size:1.2em;
+  }
+  table {
+    width:100%;
+  }
+  th {
+    background-color: #555;
+    color: #fff;
+  }
+  tr { 
+    height:62px;
+  }
+  .Type01 {
+    background-color: #fff;
+    color: #000;
+  }
+  .Type02 {
+    background-color: #0f0;
+    color: #000;
+  }
+  .Type03 {
+    background-color: #f00;
+    color: #000;
+  }
+  .Prior {
+  	background-color: #59e6e6;
+  	color: #000;
+  }
+  .Last {
+  	background-color: #f77c40;
+  	color: #000;
+  }
+  button {
+    width: 100%; 
+    height: 58px;
+    font-size:larger;
+    font-weight:  bold;
+  }	
+	button:only-of-type:hover {
+	  	border-style: dotted;
+		border-block-color: red;
+		border-width: thick;
+		/* background-color: #6600ff;
+		color: #000; */
+	}  	
+</style>
+<script language="javascript">
+	priorElement = "";
+	prior2Elem = "";
+	
+	function Clicked(elementID) {
+//  	alert(elementID);
+		if(priorElement != elementID && priorElement != "") {
+  			document.getElementById(priorElement).className = "Prior";
+	    }
+	  	console.log(elementID.substr(1));
+	  	if (document.getElementById(elementID).classList.contains('Type01')) {	  	
+			if(prior2Elem != elementID && prior2Elem != "") {
+		  		document.getElementById(prior2Elem).className = "Type02";
+	  		}
+		  	prior2Elem = priorElement;
+	    	priorElement = elementID;
+	  		document.getElementById(elementID).className = "Last";	  		
+	    }
+	    else if (document.getElementById(elementID).classList.contains('Type02')) {
+	  		document.getElementById(elementID).className = "Type03";
+	  	}
+	    else if (document.getElementById(elementID).classList.contains('Type03')) {
+	  		document.getElementById(elementID).className = "Type01";
+	      priorElement = ""
+	  	}
+  	}
+</script>
+</head>
+<body>
+<table>
+	<colgroup>
+		<col style="width:10%">
+		<col style="width:10%">
+		<col style="width:10%">
+		<col style="width:10%">
+		<col style="width:10%">
+		<col style="width:10%">
+		<col style="width:10%">
+		<col style="width:10%">
+		<col style="width:10%">
+	</colgroup>
+	<tr>
+		<th>0s</th>
+		<th>10s</th>
+		<th>20s</th>
+		<th>30s</th>
+		<th>40s</th>
+		<th>50s</th>
+		<th>60s</th>
+		<th>70s</th>
+		<th>80s</th>
+	</tr>
+	<tr>
+		<td><button id="f01" class="Type01" onclick='Clicked("f01")'>01</button></td>
+    	<td><button id="f11" class="Type01" onclick='Clicked("f11")'>11</button></td>
+		<td><button id="f21" class="Type01" onclick='Clicked("f21")'>21</button></td>
+		<td><button id="f31" class="Type01" onclick='Clicked("f31")'>31</button></td>
+		<td><button id="f41" class="Type01" onclick='Clicked("f41")'>41</button></td>
+		<td><button id="f51" class="Type01" onclick='Clicked("f51")'>51</button></td>
+		<td><button id="f61" class="Type01" onclick='Clicked("f61")'>61</button></td>
+		<td><button id="f71" class="Type01" onclick='Clicked("f71")'>71</button></td>
+		<td><button id="f81" class="Type01" onclick='Clicked("f81")'>81</button></td>
+	</tr>
+	<tr>
+		<td><button id="f02" class="Type01" onclick='Clicked("f02")'>02</button></td>
+    	<td><button id="f12" class="Type01" onclick='Clicked("f12")'>12</button></td>
+		<td><button id="f22" class="Type01" onclick='Clicked("f22")'>22</button></td>
+		<td><button id="f32" class="Type01" onclick='Clicked("f32")'>32</button></td>
+		<td><button id="f42" class="Type01" onclick='Clicked("f42")'>42</button></td>
+		<td><button id="f52" class="Type01" onclick='Clicked("f52")'>52</button></td>
+		<td><button id="f62" class="Type01" onclick='Clicked("f62")'>62</button></td>
+		<td><button id="f72" class="Type01" onclick='Clicked("f72")'>72</button></td>
+		<td><button id="f82" class="Type01" onclick='Clicked("f82")'>82</button></td>
+	</tr>
+	<tr>
+		<td><button id="f03" class="Type01" onclick='Clicked("f03")'>03</button></td>
+    	<td><button id="f13" class="Type01" onclick='Clicked("f13")'>13</button></td>
+		<td><button id="f23" class="Type01" onclick='Clicked("f23")'>23</button></td>
+		<td><button id="f33" class="Type01" onclick='Clicked("f33")'>33</button></td>
+		<td><button id="f43" class="Type01" onclick='Clicked("f43")'>43</button></td>
+		<td><button id="f53" class="Type01" onclick='Clicked("f53")'>53</button></td>
+		<td><button id="f63" class="Type01" onclick='Clicked("f63")'>63</button></td>
+		<td><button id="f73" class="Type01" onclick='Clicked("f73")'>73</button></td>
+		<td><button id="f83" class="Type01" onclick='Clicked("f83")'>83</button></td>
+	</tr>
+	<tr>
+		<td><button id="f04" class="Type01" onclick='Clicked("f04")'>04</button></td>
+    	<td><button id="f14" class="Type01" onclick='Clicked("f14")'>14</button></td>
+		<td><button id="f24" class="Type01" onclick='Clicked("f24")'>24</button></td>
+		<td><button id="f34" class="Type01" onclick='Clicked("f34")'>34</button></td>
+		<td><button id="f44" class="Type01" onclick='Clicked("f44")'>44</button></td>
+		<td><button id="f54" class="Type01" onclick='Clicked("f54")'>54</button></td>
+		<td><button id="f64" class="Type01" onclick='Clicked("f64")'>64</button></td>
+		<td><button id="f74" class="Type01" onclick='Clicked("f74")'>74</button></td>
+		<td><button id="f84" class="Type01" onclick='Clicked("f84")'>84</button></td>
+	</tr>
+	<tr>
+		<td><button id="f05" class="Type01" onclick='Clicked("f05")'>05</button></td>
+    	<td><button id="f15" class="Type01" onclick='Clicked("f15")'>15</button></td>
+		<td><button id="f25" class="Type01" onclick='Clicked("f25")'>25</button></td>
+		<td><button id="f35" class="Type01" onclick='Clicked("f35")'>35</button></td>
+		<td><button id="f45" class="Type01" onclick='Clicked("f45")'>45</button></td>
+		<td><button id="f55" class="Type01" onclick='Clicked("f55")'>55</button></td>
+		<td><button id="f65" class="Type01" onclick='Clicked("f65")'>65</button></td>
+		<td><button id="f75" class="Type01" onclick='Clicked("f75")'>75</button></td>
+		<td><button id="f85" class="Type01" onclick='Clicked("f85")'>85</button></td>
+	</tr>
+	<tr>
+		<td><button id="f06" class="Type01" onclick='Clicked("f06")'>06</button></td>
+    	<td><button id="f16" class="Type01" onclick='Clicked("f16")'>16</button></td>
+		<td><button id="f26" class="Type01" onclick='Clicked("f26")'>26</button></td>
+		<td><button id="f36" class="Type01" onclick='Clicked("f36")'>36</button></td>
+		<td><button id="f46" class="Type01" onclick='Clicked("f46")'>46</button></td>
+		<td><button id="f56" class="Type01" onclick='Clicked("f56")'>56</button></td>
+		<td><button id="f66" class="Type01" onclick='Clicked("f66")'>66</button></td>
+		<td><button id="f76" class="Type01" onclick='Clicked("f76")'>76</button></td>
+		<td><button id="f86" class="Type01" onclick='Clicked("f86")'>86</button></td>
+	</tr>
+	<tr>
+		<td><button id="f07" class="Type01" onclick='Clicked("f07")'>07</button></td>
+    	<td><button id="f17" class="Type01" onclick='Clicked("f17")'>17</button></td>
+		<td><button id="f27" class="Type01" onclick='Clicked("f27")'>27</button></td>
+		<td><button id="f37" class="Type01" onclick='Clicked("f37")'>37</button></td>
+		<td><button id="f47" class="Type01" onclick='Clicked("f47")'>47</button></td>
+		<td><button id="f57" class="Type01" onclick='Clicked("f57")'>57</button></td>
+		<td><button id="f67" class="Type01" onclick='Clicked("f67")'>67</button></td>
+		<td><button id="f77" class="Type01" onclick='Clicked("f77")'>77</button></td>
+		<td><button id="f87" class="Type01" onclick='Clicked("f87")'>87</button></td>
+	</tr>
+	<tr>
+		<td><button id="f08" class="Type01" onclick='Clicked("f08")'>08</button></td>
+    	<td><button id="f18" class="Type01" onclick='Clicked("f18")'>18</button></td>
+		<td><button id="f28" class="Type01" onclick='Clicked("f28")'>28</button></td>
+		<td><button id="f38" class="Type01" onclick='Clicked("f38")'>38</button></td>
+		<td><button id="f48" class="Type01" onclick='Clicked("f48")'>48</button></td>
+		<td><button id="f58" class="Type01" onclick='Clicked("f58")'>58</button></td>
+		<td><button id="f68" class="Type01" onclick='Clicked("f68")'>68</button></td>
+		<td><button id="f78" class="Type01" onclick='Clicked("f78")'>78</button></td>
+		<td><button id="f88" class="Type01" onclick='Clicked("f88")'>88</button></td>
+	</tr>
+	<tr>
+		<td><button id="f09" class="Type01" onclick='Clicked("f09")'>09</button></td>
+    	<td><button id="f19" class="Type01" onclick='Clicked("f19")'>19</button></td>
+		<td><button id="f29" class="Type01" onclick='Clicked("f29")'>29</button></td>
+		<td><button id="f39" class="Type01" onclick='Clicked("f39")'>39</button></td>
+		<td><button id="f49" class="Type01" onclick='Clicked("f49")'>49</button></td>
+		<td><button id="f59" class="Type01" onclick='Clicked("f59")'>59</button></td>
+		<td><button id="f69" class="Type01" onclick='Clicked("f69")'>69</button></td>
+		<td><button id="f79" class="Type01" onclick='Clicked("f79")'>79</button></td>
+		<td><button id="f89" class="Type01" onclick='Clicked("f89")'>89</button></td>
+	</tr>
+	<tr>
+		<td><button id="f10" class="Type01" onclick='Clicked("f10")'>10</button></td>
+    	<td><button id="f20" class="Type01" onclick='Clicked("f20")'>20</button></td>
+		<td><button id="f30" class="Type01" onclick='Clicked("f30")'>30</button></td>
+		<td><button id="f40" class="Type01" onclick='Clicked("f40")'>40</button></td>
+		<td><button id="f50" class="Type01" onclick='Clicked("f50")'>50</button></td>
+		<td><button id="f60" class="Type01" onclick='Clicked("f60")'>60</button></td>
+		<td><button id="f70" class="Type01" onclick='Clicked("f70")'>70</button></td>
+		<td><button id="f80" class="Type01" onclick='Clicked("f80")'>80</button></td>
+		<td><button id="f90" class="Type01" onclick='Clicked("f90")'>90</button></td>
+	</tr>
+</table>
+CTRL+ to zoom in until it fits the height.<br />
+Refresh to clear. &nbsp; &nbsp; <span style="font-size:smaller">v 1.5</span>
+</body>
+</html>
