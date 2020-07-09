@@ -4,9 +4,17 @@
     <title>Bingo Countdown</title>
 		<style>
 			h1 {text-align: center;
-			font-size: 150px;}
+			font-size: 100px;}
 			button {text-align: center;
 			font-size: 30px;}
+      img {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      div {
+  background-image: url('Bingo_Wide.jpg');
+}
 			body {
 			background-color: lightblue;
 			}
@@ -16,39 +24,115 @@
 <p></p>
 <h1 id="timerText" > WAITING </h1>
 <p></p>
-<button type="button" onclick="startTimer(60)">1 Minute</button>
-<button type="button" onclick="startTimer(90)">1 Minute and a half</button>
-<button type="button" onclick="startTimer(120)">2 Minutes Fast</button>
-<button type="button" onclick="startTimer(119)">2 Minutes Slow</button>
-<button type="button" onclick="startTimer(300)">5 Minutes</button>
 
-<audio id="OneTwenty">
-  <source src="Two_Minutes.ogg" type="audio/ogg">
-  Your browser does not support the audio element.
-</audio>
-
-<audio id="SlowOneTwenty">
-  <source src="Slow_Two_Minutes.ogg" type="audio/ogg">
-  Your browser does not support the audio element.
-</audio>
-
-<audio id="OneMinute">
-  <source src="OneMinute.ogg" type="audio/ogg">
-  Your browser does not support the audio element.
-</audio>
-
-<audio id="FiveMinutes">
-  <source src="FiveMinutes.ogg" type="audio/ogg">
-  Your browser does not support the audio element.
-</audio>
-
-<audio id="Ninety">
-  <source src="NinetySeconds.ogg" type="audio/ogg">
-  Your browser does not support the audio element.
-</audio>
+<img id="Exercise_Image" src="Bingo_Wide.jpg" width="500" height="300">
+<p></p>
+  <label for="exercise">Choose an exercise:</label>
+  <select name="exercise" id="exerciseId" onchange="selectExercise()" class="center">
+    <option value="Awaiting_Input">--</option>
+    <option value="Arm Circles">Arm Circles</option>
+    <option value="Balance on one leg">Balance On One Leg</option>
+    <option value="Bicep Curls">Bicep Curls</option>
+    <option value="Calf Raises">Calf Raises</option>
+    <option value="Chair Squats">Chair Squats</option>
+    <option value="High Knee Lifts">High Knee Lifts</option>
+    <option value="Horse Stance">Horse Stance</option>
+    <option value="Jumping Jacks">Jumping Jacks</option>
+    <option value="Lunges">Lunges</option>
+    <option value="Punches">Punches</option>
+    <option value="Push Ups">Push Ups</option>
+    <option value="Run">Run</option>
+    <option value="Side Leg Lifts">Side Leg Lifts</option>
+    <option value="Side to Sides">Side to Sides</option>
+    <option value="Starfish">Starfish</option>
+    <option value="Tricep Extensions">Tricep Extensions</option>
+    <option value="Wall Squats">Wall Squats</option>
+  </select>
+<p></p>
+<button type="button" onclick="start_Exercise()">Start Exercise</button>
 
 <audio id="Tada">
-  <source src="Tada.ogg" type="audio/ogg">
+  <source src="Music/Tada.ogg" type="audio/ogg">
+  Your browser does not support the audio element.
+</audio>
+
+<audio id="Horse_Stance">
+  <source src="Music/Horse_Stance.ogg" type="audio/ogg">
+  Your browser does not support the audio element.
+</audio>
+
+<audio id="Side_Leg_Lifts">
+  <source src="Music/Side_Leg_Lifts.ogg" type="audio/ogg">
+  Your browser does not support the audio element.
+</audio>
+
+<audio id="Punches">
+  <source src="Music/Punches.ogg" type="audio/ogg">
+  Your browser does not support the audio element.
+</audio>
+
+<audio id="Wall_Squats">
+  <source src="Music/Wall_Squats.ogg" type="audio/ogg">
+  Your browser does not support the audio element.
+</audio>
+
+<audio id="High_Knee_Lifts">
+  <source src="Music/High_Knee_Lifts.ogg" type="audio/ogg">
+  Your browser does not support the audio element.
+</audio>
+
+<audio id="Bicep_Curls">
+  <source src="Music/Bicep_Curls.ogg" type="audio/ogg">
+  Your browser does not support the audio element.
+</audio>
+
+<audio id="Chair_Squats">
+  <source src="Music/Chair_Squats.ogg" type="audio/ogg">
+  Your browser does not support the audio element.
+</audio>
+
+<audio id="Jumping_Jacks">
+  <source src="Music/Jumping_Jacks.ogg" type="audio/ogg">
+  Your browser does not support the audio element.
+</audio>
+
+<audio id="Balance_On_One_Leg">
+  <source src="Music/Balance_On_One_Leg.ogg" type="audio/ogg">
+  Your browser does not support the audio element.
+</audio>
+
+<audio id="Lunges">
+  <source src="Music/Lunges.ogg" type="audio/ogg">
+  Your browser does not support the audio element.
+</audio>
+
+<audio id="Starfish">
+  <source src="Music/Starfish.ogg" type="audio/ogg">
+  Your browser does not support the audio element.
+</audio>
+
+<audio id="Calf_Raises">
+  <source src="Music/Calf_Raises.ogg" type="audio/ogg">
+  Your browser does not support the audio element.
+</audio>
+
+<audio id="Side_To_Side">
+  <source src="Music/Side_To_Side.ogg" type="audio/ogg">
+  Your browser does not support the audio element.
+</audio>
+
+<audio id="Run">
+  <source src="Music/Run.ogg" type="audio/ogg">
+  Your browser does not support the audio element.
+</audio>
+
+<audio id="Tricep_Extensions">
+  <source src="Music/Tricep_Extensions.ogg" type="audio/ogg">
+  Your browser does not support the audio element.
+</audio>
+
+<audio id="Arm_Circles">
+  <source src="Music/Arm_Circles.ogg" type="audio/ogg">
   Your browser does not support the audio element.
 </audio>
 
@@ -75,6 +159,128 @@ blinkingTimer = 0;
 var countdownTimer = 0;
 var preTimer = 0;
 
+var soundToPlay;
+var timeToPlay;
+
+function start_Exercise() {
+     startTimer(timeToPlay);
+}
+
+function selectExercise() {
+
+  var exerciseText = document.getElementById("exerciseId");
+
+  switch (exerciseText.value) {
+
+    case "Side Leg Lifts":
+        Exercise_Area.src="Fitness/side_leg_lifts.gif";
+        Exercise_Area.width="300";
+        soundToPlay=Side_Leg_Lifts_Audio;
+        timeToPlay = 30;
+        break;
+    case "Lunges":
+        Exercise_Area.src="Fitness/lunges.gif";
+        Exercise_Area.width="500";
+        soundToPlay=Lunges_Audio;
+        timeToPlay = 60;
+        break;
+    case "Arm Circles":
+        Exercise_Area.src="Fitness/arm_circles.gif";
+        soundToPlay=Arm_Circles_Audio;
+        timeToPlay = 30;
+        break;
+    case "Balance on one leg":
+        Exercise_Area.src="Fitness/tree-pose.gif";
+        Exercise_Area.width="300";
+        soundToPlay=Balance_On_One_Leg_Audio
+        timeToPlay = 60;
+        break;
+    case "Bicep Curls":
+        Exercise_Area.src="Fitness/bicep_curls.gif";
+        Exercise_Area.width="500";
+        soundToPlay=Bicep_Curls_Audio;
+        timeToPlay = 60;
+        break;
+    case "Calf Raises":
+        Exercise_Area.src="Fitness/Calf-raises.gif";
+        Exercise_Area.width="300";
+        soundToPlay=Calf_Raises_Audio
+        timeToPlay = 90;
+        break;
+    case "Chair Squats":
+        Exercise_Area.src="Fitness/chair_squats.gif";
+        Exercise_Area.width="300";
+        soundToPlay=Chair_Squats_Audio;
+        timeToPlay = 60;
+        break;
+    case "High Knee Lifts":
+        Exercise_Area.src="Fitness/knee_lifts.gif";
+        Exercise_Area.width="300";
+        soundToPlay=High_Knee_Lifts_Audio;
+        timeToPlay = 120;
+        break;
+    case "Horse Stance":
+        Exercise_Area.src="Fitness/horse_stance.gif";
+        Exercise_Area.width="300";
+        soundToPlay=Horse_Stance_Audio;
+        timeToPlay = 120;
+        break;
+    case "Jumping Jacks":
+        Exercise_Area.src="Fitness/jumping_jacks.gif";
+        Exercise_Area.width="300";
+        soundToPlay=Jumping_Jacks_Audio;
+        timeToPlay = 90;
+        break;
+    case "Punches":
+        Exercise_Area.src="Fitness/punches.gif";
+        Exercise_Area.width="500";
+        soundToPlay=Punches_Audio;
+        timeToPlay = 120;
+        break;
+    case "Push Ups":
+        Exercise_Area.src="Fitness/push_ups.gif";
+        Exercise_Area.width="500";
+        soundToPlay="OneMinute";
+        timeToPlay = 30;
+        break;
+    case "Run":
+        Exercise_Area.src="Fitness/running.gif";
+        Exercise_Area.width="500";
+        soundToPlay=Run_Audio;
+        timeToPlay = 300;
+        break;
+    case "Side to Sides":
+        Exercise_Area.src="Fitness/side_to_side.gif";
+        Exercise_Area.width="500";
+        soundToPlay=Side_To_Side_Audio;
+        timeToPlay = 120;
+        break;
+    case "Starfish":
+        Exercise_Area.src="Fitness/starfish.gif";
+        Exercise_Area.width="300";
+        soundToPlay=Starfish_Audio;
+        timeToPlay = 60;
+        break;
+    case "Tricep Extensions":
+        Exercise_Area.src="Fitness/tricep_extensions.gif";
+        Exercise_Area.width="300";
+        soundToPlay=Tricep_Extensions_Audio;
+        timeToPlay = 60;
+        break;
+    case "Wall Squats":
+        Exercise_Area.src="Fitness/wall_squats.gif";
+        Exercise_Area.width="300";
+        soundToPlay=Wall_Squats_Audio;
+        timeToPlay = 120;
+        break;
+    default :
+        Exercise_Area.src="Bingo_Wide.gif";
+        Exercise_Area.width="300";
+        soundToPlay="OneMinute";
+        timeToPlay = 30;
+        break;
+  }
+}
 function displayTimer(timer){
 
 	   var totalSeconds = timer / SECOND;
@@ -89,26 +295,9 @@ function displayTimer(timer){
 }
 
 function playSound(seconds){
-  switch (seconds/SECOND){
-      case 60 :
-        OneMinute.play(); 
-        break;
-      case 90 :
-        Ninety_Seconds.play(); 
-        break;
-      case 300 :
-        FiveMinutes.play();
-        break;
-      case 119:
-        SlowOneTwenty.play();
-        break;
-      case 120:
-        OneTwenty.play();
-        break;
-      default :
-        break;
-  }
+  soundToPlay.play();
 }
+
 function checkTimeout() {
 
    switch(countdownState) {
@@ -168,10 +357,27 @@ function startTimer(seconds){
 }
 
 var textArea       = document.getElementById('timerText');
+var Exercise_Area  = document.getElementById('Exercise_Image');
 var debugTextArea  = document.getElementById('debugText');
 
-var OneTwenty      = document.getElementById("OneTwenty"); 
-var Ninety_Seconds = document.getElementById("Ninety"); 
+var Horse_Stance_Audio       = document.getElementById("Horse_Stance"); 
+var Side_Leg_Lifts_Audio     = document.getElementById("Side_Leg_Lifts"); 
+var Punches_Audio            = document.getElementById("Punches"); 
+var Wall_Squats_Audio        = document.getElementById("Wall_Squats"); 
+var High_Knee_Lifts_Audio    = document.getElementById("High_Knee_Lifts"); 
+var Bicep_Curls_Audio        = document.getElementById("Bicep_Curls"); 
+var Chair_Squats_Audio       = document.getElementById("Chair_Squats"); 
+var Jumping_Jacks_Audio      = document.getElementById("Jumping_Jacks"); 
+var Balance_On_One_Leg_Audio = document.getElementById("Balance_On_One_Leg"); 
+var Lunges_Audio             = document.getElementById("Lunges"); 
+var Starfish_Audio           = document.getElementById("Starfish"); 
+var Calf_Raises_Audio        = document.getElementById("Calf_Raises"); 
+var Side_To_Side_Audio       = document.getElementById("Side_To_Side"); 
+var Run_Audio                = document.getElementById("Run"); 
+var Tricep_Extensions_Audio  = document.getElementById("Tricep_Extensions"); 
+var Arm_Circles_Audio        = document.getElementById("Arm_Circles"); 
+
+//////////////////////////////////////////////////////////////
 
 textArea.innerHTML = 'Waiting';
 </script>
