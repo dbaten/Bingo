@@ -176,7 +176,7 @@ function selectExercise() {
         Exercise_Area.src="Fitness/side_leg_lifts.gif";
         Exercise_Area.width="300";
         soundToPlay=Side_Leg_Lifts_Audio;
-        timeToPlay = 30;
+        timeToPlay = 45;
         break;
     case "Lunges":
         Exercise_Area.src="Fitness/lunges.gif";
@@ -187,7 +187,7 @@ function selectExercise() {
     case "Arm Circles":
         Exercise_Area.src="Fitness/arm_circles.gif";
         soundToPlay=Arm_Circles_Audio;
-        timeToPlay = 30;
+        timeToPlay = 45;
         break;
     case "Balance on one leg":
         Exercise_Area.src="Fitness/tree-pose.gif";
@@ -211,7 +211,7 @@ function selectExercise() {
         Exercise_Area.src="Fitness/chair_squats.gif";
         Exercise_Area.width="300";
         soundToPlay=Chair_Squats_Audio;
-        timeToPlay = 60;
+        timeToPlay = 90;
         break;
     case "High Knee Lifts":
         Exercise_Area.src="Fitness/knee_lifts.gif";
@@ -323,7 +323,7 @@ function checkTimeout() {
 	   countdownTimer-=SECOND;
 
        displayTimer(countdownTimer);
-	     if (countdownTimer < 2000){
+	     if (countdownTimer < 1000){
            countdownState = TIMER_EXPIRED;
            Tada.play();
 	     }
