@@ -51,14 +51,37 @@ body {
 		border-width: thick;
 		/* background-color: #6600ff;
 		color: #000; */
-	}  	
+	}  
+.btn-group button {
+  background-color: #c6d8c7; /* Green background */
+  border: 1px solid green; /* Green border */
+  color: white; /* White text */
+  padding: 10px 24px; /* Some padding */
+  cursor: pointer; /* Pointer/hand icon */
+  float: left; /* Float the buttons side by side */
+}
+
+/* Clear floats (clearfix hack) */
+.btn-group:after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.btn-group button:not(:last-child) {
+  border-right: none; /* Prevent double borders */
+}
+
+/* Add a background color on hover */
+.btn-group button:hover {
+  background-color: #3e8e41;
+}	
 </style>
 <script language="javascript">
 	priorElement = "";
 	prior2Elem = "";
 	
 	function Clicked(elementID) {
-//  	alert(elementID);
 		if(priorElement != elementID && priorElement != "") {
   			document.getElementById(priorElement).className = "Prior";
 	    }
@@ -216,7 +239,192 @@ body {
 		<td><button id="f90" class="Type01" onclick='Clicked("f90")'>90</button></td>
 	</tr>
 </table>
-CTRL+ to zoom in until it fits the height.<br />
-Refresh to clear. &nbsp; &nbsp; <span style="font-size:smaller">v 1.5</span>
+<table>
+	<colgroup>
+		<col style="width:10%">
+		<col style="width:10%; font-size:larger ">
+	</colgroup>
+	<tr>
+		<td><button class="btn-group" onclick='onHitMe()'>Hit Me</button></td>
+		<td><button id="currentBall" class="btn-group" > -- </button></td>
+</table>
+<script>
+
+	MAXBALLS=90;
+	MAXTRIALS=500;
+    var balls = [];
+	currentBall = 0;
+	currentVoice = 0;
+	var supportedLanguages = [0,1,3,4,5];
+	var numDoubles = 0;
+
+	for (ball=0;ball<MAXBALLS;ball++){
+		balls[ball]=ball+1;
+	}
+
+	for (trial=0;trial<MAXTRIALS;trial++){
+		for (ball=0;ball<MAXBALLS;ball++){
+			ballToSwap = parseInt(Math.random()*MAXBALLS);
+			swap(ball,ballToSwap);			
+		}
+	}
+
+
+	speak("Let's play bingo");
+	speak("woohoo");
+
+	function gotADouble(number){
+
+		numDoubles++;
+
+        if (number !=55 && number != 11){
+			if (numDoubles == 2) {
+				speak("Another Double");
+			}
+			else if (numDoubles == 3 ) {
+				speak("Yet Another Double");
+			}
+			else if (numDoubles == 1 ) {
+				speak("Got a Double");
+			}
+		}
+
+	}
+	function swap(first, second){
+
+		temp = balls[first];
+		balls[first]  = balls[second];
+		balls[second] = temp;
+	}
+
+	function paintTile(tileToPaint){
+		if (tileToPaint<10){
+			id = "f0"+tileToPaint;
+		}
+		else {
+			id = "f"+tileToPaint;
+		}
+		Clicked(id);
+	}
+	function speak(message){
+
+		var msg=new SpeechSynthesisUtterance(message);
+		var voices = window.speechSynthesis.getVoices();
+		maxVoices = supportedLanguages.length;
+
+		if (currentVoice < maxVoices){
+			currentVoice++;
+		}
+		else {
+
+			currentVoice = 0;
+		}
+		var language= 4;//supportedLanguages[currentVoice];
+ 
+		msg.voice  = voices[language];
+		window.speechSynthesis.speak(msg);
+	}
+
+	function speakNumber(number){
+
+		tens = parseInt(number/10);
+		ones = number - (10 * tens);
+
+		if (tens == ones){
+			gotADouble(number);
+		}
+
+    	switch (number){
+			case 88:
+				speak("crazy eights 88");
+				break;
+			case 76:
+				speak("76 trombones");
+				break;
+			case 71:
+				speak("s r 71");
+				break;
+			case 57:
+			    if (Math.random() > 0.5 ){
+					speak("heinz 57");
+					}
+				else {
+					speak("57 chevy");
+					}
+				break;
+			case 55:
+				speak("double Nickel 55");
+				break;
+			case 54:
+				speak("car 54 where are you");
+				break;
+			case 51:
+				speak("area 51");
+				break;
+			case 50:
+				speak("hawaii 5 0");
+				break;
+			case 31:
+				speak("31 flavors");
+				break;
+			case 21:
+				speak("blackjack 21");
+				break;
+			case 19:
+				speak("hey 19 ");
+				break;
+			case 17:
+				speak("17, ah, gain ");
+				break;
+			case 16:
+				speak("sweet 16");
+				break;
+			case 13:
+				speak("lucky number 13");
+				break;
+			case 11:
+				speak("chicken legs 11");
+				break;
+			case 9:
+				speak("number 9");
+				speak("number 9");
+				speak("number 9");
+				break;
+			case 8:
+				speak("8,, the ocho");
+				break;
+			case 7:
+				speak("lucky number 7");
+				break;
+			case 4:
+				speak("quatro 4");
+				break;
+			case 2:
+				speak("the deuce");
+				break;
+			case 1:
+				speak("Uno ");
+				break;
+			default:
+				speak(number);
+		}
+
+		if (ones == 0){
+			speak ("thats ");
+		}
+		speak(tens+" "+ones);
+	}
+	function onHitMe() {
+		// put the number in the output
+		document.getElementById("currentBall").innerHTML = balls[currentBall];
+
+		// paint the tile
+		paintTile(balls[currentBall]);
+
+		// speak out the number
+		speakNumber(balls[currentBall]);
+        currentBall++;
+	}
+</script>
 </body>
 </html>
