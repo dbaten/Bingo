@@ -443,9 +443,10 @@ body {
 		}
 
 		if (ones == 0){
-			speak ("thats ");
+			speak ("thats "+ tens+ "zero");
+		} else {
+			speak(tens+" "+ones);
 		}
-		speak(tens+" "+ones);
 	}
 	
 	function onHitMe() {
