@@ -248,33 +248,63 @@ body {
 		<td><button class="btn-group" onclick='onHitMe()'>Hit Me</button></td>
 		<td><button id="currentBall" class="btn-group" > -- </button></td>
 </table>
+<table>
+	<tr>
+		<td>
+			<button name="loadLang" id="loadLangId" style="width: 80px; height: 35px; font-size: 0.9em; padding-left: 2px;" onclick='loadLang()'>Load</button>
+			<label for="language">Lang:</label>
+  			<select name="language" id="languageId">
+				<option value="1">1</option>
+  			</select>
+			<label for="auto">Auto:</label>
+  			<select name="auto" id="autoId">
+				<option value="7">7</option>
+				<option value="8">8</option>
+				<option value="9" selected="selected">9</option>
+				<option value="10">10</option>
+				<option value="12">12</option>
+				<option value="15">15</option>
+  			</select>
+			<button name="autoRun" id="autoRunId" style="width: 100px; height: 35px;" onclick='onAutoRun()'>Auto</button>
+		</td>
+	</tr>
+</table>
+	
 <script>
 
 	MAXBALLS=90;
 	MAXTRIALS=500;
     var balls = [];
 	currentBall = 0;
-	currentVoice = 0;
-	var supportedLanguages = [0,1,3,4,5];
+	//var supportedLanguages = [0,1,3,4,5];
+	var supportedLanguages = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
+
+//	var voices = window.speechSynthesis.getVoices();
+//	maxVoices = supportedLanguages.length;
+//	fillLanguageDropdown(maxVoices, 1);
+	
 	var numDoubles = 0;
 
-	for (ball=0;ball<MAXBALLS;ball++){
-		balls[ball]=ball+1;
+	for (ball=0; ball < MAXBALLS; ball++){
+		balls[ball] = ball + 1;
 	}
 
-	for (trial=0;trial<MAXTRIALS;trial++){
-		for (ball=0;ball<MAXBALLS;ball++){
+	for (trial=0; trial < MAXTRIALS; trial++){
+		for (ball=0; ball < MAXBALLS; ball++){
 			ballToSwap = parseInt(Math.random()*MAXBALLS);
-			swap(ball,ballToSwap);			
+			swap(ball, ballToSwap);			
 		}
 	}
 
-
 	speak("Let's play bingo");
 	speak("woohoo");
+	
+	// States
+	const MANUAL = 0;
+	const AUTO   = 1;
+	var runState = MANUAL;
 
 	function gotADouble(number){
-
 		numDoubles++;
 
         if (number !=55 && number != 11){
@@ -288,46 +318,49 @@ body {
 				speak("Got a Double");
 			}
 		}
-
 	}
+	
 	function swap(first, second){
-
 		temp = balls[first];
-		balls[first]  = balls[second];
+		balls[first] = balls[second];
 		balls[second] = temp;
 	}
 
 	function paintTile(tileToPaint){
-		if (tileToPaint<10){
-			id = "f0"+tileToPaint;
+		if (tileToPaint < 10){
+			id = "f0" + tileToPaint;
 		}
 		else {
-			id = "f"+tileToPaint;
+			id = "f" + tileToPaint;
 		}
 		Clicked(id);
 	}
+	
+	function loadLang(message){
+		speak("Welcome to Bingo");
+		document.getElementById("loadLangId").style.display = "none";
+	}
+	
 	function speak(message){
-
-		var msg=new SpeechSynthesisUtterance(message);
+		console.log("speak " + message);
+		
+		var currentLang = document.getElementById("languageId").value
+		if (isNaN(currentLang) || currentLang == undefined || currentLang == "") {
+			currentLang = 1;
+		}
 		var voices = window.speechSynthesis.getVoices();
 		maxVoices = supportedLanguages.length;
+		fillLanguageDropdown(voices, currentLang);
+	
+		var msg=new SpeechSynthesisUtterance(message);
 
-		if (currentVoice < maxVoices){
-			currentVoice++;
-		}
-		else {
-
-			currentVoice = 0;
-		}
-		var language= 4;//supportedLanguages[currentVoice];
- 
-		msg.voice  = voices[language];
+		msg.voice = voices[document.getElementById("languageId").value];
 		window.speechSynthesis.speak(msg);
 	}
 
 	function speakNumber(number){
 
-		tens = parseInt(number/10);
+		tens = parseInt(number / 10);
 		ones = number - (10 * tens);
 
 		if (tens == ones){
@@ -414,6 +447,7 @@ body {
 		}
 		speak(tens+" "+ones);
 	}
+	
 	function onHitMe() {
 		// put the number in the output
 		document.getElementById("currentBall").innerHTML = balls[currentBall];
@@ -425,6 +459,71 @@ body {
 		speakNumber(balls[currentBall]);
         currentBall++;
 	}
+	
+	function fillLanguageDropdown(voices, defaultVoice){
+		// clear dropdown
+		var select = document.getElementById("languageId");
+		var length = select.options.length;
+		for (i = length-1; i >= 0; i--) {
+			select.options[i] = null;
+		}
+		// fill dropdown
+		for(var i = 0; i < voices.length; i++) {
+    		var option = document.createElement('option');
+    		option.textContent = voices[i].name + ' (' + voices[i].lang + ')';
+    		
+    		if(voices[i].default) {
+      			option.textContent += ' -- DEFAULT';
+    		}
+		
+    		option.setAttribute('data-lang', voices[i].lang);
+    		option.setAttribute('data-name', voices[i].name);
+    		option.value = i;
+    		//document.getElementById("voiceSelect").appendChild(option);
+			select.appendChild(option);
+  		}
+  		/*
+		for(var i = 0; i < maxVoices; i++) {
+			var el = document.createElement("option");
+			el.textContent = i;
+			el.value = i;
+			//if (i == defaultVoice){
+			//	el.selected = true;
+			//}
+			select.appendChild(el);
+		}
+		*/
+		document.getElementById("languageId").value = new String(defaultVoice);
+		console.log("language is " + document.getElementById("languageId").value);
+	}
+	
+	function onAutoRun(){
+		if (runState == MANUAL){
+			console.log("starting auto");
+			runState = AUTO;
+			document.querySelector('#autoRunId').innerHTML = 'Stop';
+			//document.querySelector('#autoRunId').innerText = 'Stop';
+			//document.querySelector('#autoRunId').textContent = 'Stop';
+		
+			// wait one second for the next tick
+			setTimeout(autoTimeout, 1000 * document.getElementById("autoId").value);
+		}
+		else {
+			console.log("stopping auto");
+			document.querySelector('#autoRunId').innerHTML = 'Auto';
+			runState = MANUAL;
+		}
+	}
+	
+	function autoTimeout(){
+		if (runState == AUTO){		
+			onHitMe();
+			
+			// wait one second for the next tick
+			setTimeout(autoTimeout, 1000 * document.getElementById("autoId").value);
+		}
+	}
+	
 </script>
 </body>
 </html>
