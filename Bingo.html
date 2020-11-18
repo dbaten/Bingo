@@ -102,9 +102,13 @@ body {
 	      priorElement = ""
 	  	}
   	}
+
+	function pageLoaded() {
+  		loadLang();
+	}
 </script>
 </head>
-<body>
+<body onload="pageLoaded()">
 <table>
 	<colgroup>
 		<col style="width:10%">
@@ -247,6 +251,7 @@ body {
 	<tr>
 		<td><button class="btn-group" onclick='onHitMe()'>Hit Me</button></td>
 		<td><button id="currentBall" class="btn-group" > -- </button></td>
+	</tr>
 </table>
 <table>
 	<tr>
@@ -265,7 +270,7 @@ body {
 				<option value="12">12</option>
 				<option value="15">15</option>
   			</select>
-			<button name="autoRun" id="autoRunId" style="width: 100px; height: 35px;" onclick='onAutoRun()'>Auto</button>
+			<button name="autoRun" id="autoRunId" style="width: 150px; height: 35px;" onclick='onAutoRun()'>Auto</button>
 		</td>
 	</tr>
 </table>
@@ -303,6 +308,7 @@ body {
 	const MANUAL = 0;
 	const AUTO   = 1;
 	var runState = MANUAL;
+	var secondsOfTimeout = 1;
 
 	function gotADouble(number){
 		numDoubles++;
@@ -358,6 +364,16 @@ body {
 		window.speechSynthesis.speak(msg);
 	}
 
+	function speakOne(option1, option2){
+
+		if (Math.random() > 0.5 ){
+			speak(option1);
+		}
+		else {
+			speak(option2);
+		}
+	}
+
 	function speakNumber(number){
 
 		tens = parseInt(number / 10);
@@ -367,24 +383,24 @@ body {
 			gotADouble(number);
 		}
 
+		trailMessage = "";
+
     	switch (number){
 			case 88:
 				speak("crazy eights 88");
 				break;
 			case 76:
-				speak("76 trombones");
+				speakOne("76 trombones","the spirit of 76");
 				break;
 			case 71:
 				speak("s r 71");
 				break;
 			case 57:
-			    if (Math.random() > 0.5 ){
-					speak("heinz 57");
-					}
-				else {
-					speak("57 chevy");
-					}
+				speakOne("heinz 57","57 chevy");
 				break;
+			case 56:
+				trailMessage = "pickup sticks";
+				break
 			case 55:
 				speak("double Nickel 55");
 				break;
@@ -397,6 +413,9 @@ body {
 			case 50:
 				speak("hawaii 5 0");
 				break;
+			case 34:
+				trailMessage = "shut the door";
+				break;
 			case 31:
 				speak("31 flavors");
 				break;
@@ -404,7 +423,7 @@ body {
 				speak("blackjack 21");
 				break;
 			case 19:
-				speak("hey 19 ");
+				speakOne("hey 19 ","Nah Nah Nah Nah, 19");
 				break;
 			case 17:
 				speak("17, ah, gain ");
@@ -442,10 +461,14 @@ body {
 				speak(number);
 		}
 
+        if (tens == 0){
+			tens = "zero";
+		}
+
 		if (ones == 0){
 			speak ("thats "+ tens+ "zero");
 		} else {
-			speak(tens+" "+ones);
+			speak(tens+" "+ones+ trailMessage);
 		}
 	}
 	
@@ -479,6 +502,13 @@ body {
 		
     		option.setAttribute('data-lang', voices[i].lang);
     		option.setAttribute('data-name', voices[i].name);
+			var name = voices[i].name;
+
+			if (name.includes("UK")) {
+				if (name.includes("Female")){
+		            defaultVoice = i;
+				}
+			}
     		option.value = i;
     		//document.getElementById("voiceSelect").appendChild(option);
 			select.appendChild(option);
@@ -502,12 +532,12 @@ body {
 		if (runState == MANUAL){
 			console.log("starting auto");
 			runState = AUTO;
-			document.querySelector('#autoRunId').innerHTML = 'Stop';
-			//document.querySelector('#autoRunId').innerText = 'Stop';
-			//document.querySelector('#autoRunId').textContent = 'Stop';
-		
+
 			// wait one second for the next tick
-			setTimeout(autoTimeout, 1000 * document.getElementById("autoId").value);
+			secondsOfTimeout = 1;
+			timeoutValue = document.getElementById("autoId").value;
+			document.querySelector('#autoRunId').innerHTML = 'Stop '+secondsOfTimeout+"/"+timeoutValue;
+			setTimeout(autoTimeout, 1000 );
 		}
 		else {
 			console.log("stopping auto");
@@ -518,10 +548,17 @@ body {
 	
 	function autoTimeout(){
 		if (runState == AUTO){		
-			onHitMe();
+			secondsOfTimeout++;
+			timeoutValue = document.getElementById("autoId").value;
+			if (secondsOfTimeout > timeoutValue){
+				onHitMe();
+				secondsOfTimeout=1;
+			}
+			document.querySelector('#autoRunId').innerHTML = 'Stop '+secondsOfTimeout+"/"+timeoutValue;
 			
 			// wait one second for the next tick
-			setTimeout(autoTimeout, 1000 * document.getElementById("autoId").value);
+			//setTimeout(autoTimeout, 1000 * document.getElementById("autoId").value);
+			setTimeout(autoTimeout, 1000 );
 		}
 	}
 	
