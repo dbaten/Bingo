@@ -283,6 +283,23 @@ body {
 	currentBall = 0;
 	//var supportedLanguages = [0,1,3,4,5];
 	var supportedLanguages = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
+    
+    var introPhrases = ["let's get ready to bingo", 
+						"best of luck to all",
+						"lemon lime it's bingo time",
+						"let's have a good clean game",
+						"let the best one win",
+						"bingo, bango, bongo, let's play bingo",
+						"Keep calm and bingo on",
+						"To Bingo and beyond",
+						"Let's make bingo great again",
+						"-Whee will ! Whee will ! bingo",
+						"Are you ready to Bingo",
+						"Peace, Love, and Bingo",
+						"Live and let Bingo",
+						"Feel da riddum, feel da rhyme, get on up, its bingo time",
+						"Only the Good play bingo"];
+	var readIntro = true;
 
 //	var voices = window.speechSynthesis.getVoices();
 //	maxVoices = supportedLanguages.length;
@@ -301,8 +318,8 @@ body {
 		}
 	}
 
-	speak("Let's play bingo");
-	speak("woohoo");
+	//speak("Let's play bingo");
+	//speak("woohoo");
 	
 	// States
 	const MANUAL = 0;
@@ -343,10 +360,48 @@ body {
 	}
 	
 	function loadLang(message){
-		speak("Welcome to Bingo");
+		//speak("Welcome to Bingo");
 		document.getElementById("loadLangId").style.display = "none";
+		var voices = window.speechSynthesis.getVoices();
 	}
-	
+
+	function speakPhrase(message,voice){
+
+		// # delay
+		// + fast pitch
+		// - slow pitch
+
+		var rate = 1.0;
+		var pitch = 1.0;
+		var firstIndex = 0;
+
+		switch (message[0]) {
+				case '#':
+		var silentMsg=new SpeechSynthesisUtterance("delay");
+		silentMsg.voice = voice;
+		silentMsg.volume = 0.0;
+		window.speechSynthesis.speak(silentMsg);
+					firstIndex = 1;
+					break;
+				case '+':
+					rate = 1.2;
+					firstIndex = 1;
+					break;
+				case '-':
+					rate = 0.7;
+					firstIndex = 1;
+					break;
+				default :
+					break;
+		}
+		var messageToplay = message.substring(firstIndex,message.length);
+		
+		var msg=new SpeechSynthesisUtterance(messageToplay);
+		msg.voice = voice;
+		msg.rate = rate;
+		window.speechSynthesis.speak(msg);
+	}
+
 	function speak(message){
 		console.log("speak " + message);
 		
@@ -358,10 +413,13 @@ body {
 		maxVoices = supportedLanguages.length;
 		fillLanguageDropdown(voices, currentLang);
 	
-		var msg=new SpeechSynthesisUtterance(message);
+		//var msg=new SpeechSynthesisUtterance(message);
 
-		msg.voice = voices[document.getElementById("languageId").value];
-		window.speechSynthesis.speak(msg);
+		//msg.voice = voices[document.getElementById("languageId").value];
+		voice = voices[document.getElementById("languageId").value];
+        speakPhrase(message,voice);
+
+		//window.speechSynthesis.speak(msg);
 	}
 
 	function speakOne(option1, option2){
@@ -389,6 +447,9 @@ body {
 			case 88:
 				speak("crazy eights 88");
 				break;
+			case 78:
+				speak("78 rpms");
+				break;
 			case 76:
 				speakOne("76 trombones","the spirit of 76");
 				break;
@@ -412,6 +473,9 @@ body {
 				break;
 			case 50:
 				speak("hawaii 5 0");
+				break;
+			case 45:
+				speak("45 rpms");
 				break;
 			case 34:
 				trailMessage = "shut the door";
@@ -458,7 +522,7 @@ body {
 				speak("Uno ");
 				break;
 			default:
-				speak(number);
+				speak(number.toString());
 		}
 
         if (tens == 0){
@@ -533,10 +597,16 @@ body {
 			console.log("starting auto");
 			runState = AUTO;
 
+			if ( readIntro == true) {
+				readIntro = false;
+			    var introToRead = parseInt(Math.random()*introPhrases.length);
+				speak(introPhrases[introToRead]);
+			}
 			// wait one second for the next tick
 			secondsOfTimeout = 1;
 			timeoutValue = document.getElementById("autoId").value;
-			document.querySelector('#autoRunId').innerHTML = 'Stop '+secondsOfTimeout+"/"+timeoutValue;
+			var remaining = timeoutValue - secondsOfTimeout +1;
+			document.querySelector('#autoRunId').innerHTML = 'Stop '+remaining;
 			setTimeout(autoTimeout, 1000 );
 		}
 		else {
@@ -554,7 +624,9 @@ body {
 				onHitMe();
 				secondsOfTimeout=1;
 			}
-			document.querySelector('#autoRunId').innerHTML = 'Stop '+secondsOfTimeout+"/"+timeoutValue;
+
+			var remaining = timeoutValue - secondsOfTimeout +1;
+			document.querySelector('#autoRunId').innerHTML = 'Stop '+remaining;
 			
 			// wait one second for the next tick
 			//setTimeout(autoTimeout, 1000 * document.getElementById("autoId").value);
