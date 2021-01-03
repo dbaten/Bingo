@@ -51,6 +51,8 @@
 		<option value="Starfish">Starfish</option>
 		<option value="Tricep Extensions">Tricep Extensions</option>
 		<option value="Wall Squats">Wall Squats</option>
+		<option value="Calf And Biceps">Calf And Biceps</option>
+		<option value="Horse Stance Punches">Horse Stance Punches</option>
   	</select>
 	<p></p>
 	<button type="button" onclick="start_Exercise()">Start Exercise</button>
@@ -139,6 +141,16 @@
 	  	<source src="Music/Arm_Circles.ogg" type="audio/ogg">
 	  	Your browser does not support the audio element.
 	</audio>
+	
+	<audio id="Calf_And_Biceps">
+	  	<source src="Music/Calf_And_Biceps.ogg" type="audio/ogg">
+	  	Your browser does not support the audio element.
+	</audio>
+
+	<audio id="Horse_Stance_Punches">
+	  	<source src="Music/Horse_Stance_Punches.ogg" type="audio/ogg">
+	  	Your browser does not support the audio element.
+	</audio>
 
 
 	<script>
@@ -180,7 +192,7 @@
 					Exercise_Area.src="Fitness/side_leg_lifts.gif";
 					Exercise_Area.width="300";
 					soundToPlay=Side_Leg_Lifts_Audio;
-					timeToPlay = 45;
+					timeToPlay = 90;
 					break;
 				case "Lunges":
 					Exercise_Area.src="Fitness/lunges.gif";
@@ -277,6 +289,18 @@
 					soundToPlay=Wall_Squats_Audio;
 					timeToPlay = 120;
 					break;
+				case "Calf And Biceps":
+					Exercise_Area.src="Fitness/Calf_And_Biceps.gif";
+					Exercise_Area.width="300";
+					soundToPlay=Calf_And_Biceps_Audio;
+					timeToPlay = 90;
+					break;
+				case "Horse Stance Punches":
+					Exercise_Area.src="Fitness/Horse_Stance_Punches.gif";
+					Exercise_Area.width="300";
+					soundToPlay=Horse_Stance_Punches_Audio;
+					timeToPlay = 120;
+					break;
 				default :
 					Exercise_Area.src="Bingo_Wide.gif";
 					Exercise_Area.width="300";
@@ -365,22 +389,24 @@
 		var Exercise_Area  = document.getElementById('Exercise_Image');
 		var debugTextArea  = document.getElementById('debugText');
 
-		var Horse_Stance_Audio       = document.getElementById("Horse_Stance"); 
-		var Side_Leg_Lifts_Audio     = document.getElementById("Side_Leg_Lifts"); 
-		var Punches_Audio            = document.getElementById("Punches"); 
-		var Wall_Squats_Audio        = document.getElementById("Wall_Squats"); 
-		var High_Knee_Lifts_Audio    = document.getElementById("High_Knee_Lifts"); 
-		var Bicep_Curls_Audio        = document.getElementById("Bicep_Curls"); 
-		var Chair_Squats_Audio       = document.getElementById("Chair_Squats"); 
-		var Jumping_Jacks_Audio      = document.getElementById("Jumping_Jacks"); 
-		var Balance_On_One_Leg_Audio = document.getElementById("Balance_On_One_Leg"); 
-		var Lunges_Audio             = document.getElementById("Lunges"); 
-		var Starfish_Audio           = document.getElementById("Starfish"); 
-		var Calf_Raises_Audio        = document.getElementById("Calf_Raises"); 
-		var Side_To_Side_Audio       = document.getElementById("Side_To_Side"); 
-		var Run_Audio                = document.getElementById("Run"); 
-		var Tricep_Extensions_Audio  = document.getElementById("Tricep_Extensions"); 
-		var Arm_Circles_Audio        = document.getElementById("Arm_Circles"); 
+		var Horse_Stance_Audio         = document.getElementById("Horse_Stance"); 
+		var Side_Leg_Lifts_Audio       = document.getElementById("Side_Leg_Lifts"); 
+		var Punches_Audio              = document.getElementById("Punches"); 
+		var Wall_Squats_Audio          = document.getElementById("Wall_Squats"); 
+		var High_Knee_Lifts_Audio      = document.getElementById("High_Knee_Lifts"); 
+		var Bicep_Curls_Audio          = document.getElementById("Bicep_Curls"); 
+		var Chair_Squats_Audio         = document.getElementById("Chair_Squats"); 
+		var Jumping_Jacks_Audio        = document.getElementById("Jumping_Jacks"); 
+		var Balance_On_One_Leg_Audio   = document.getElementById("Balance_On_One_Leg"); 
+		var Lunges_Audio               = document.getElementById("Lunges"); 
+		var Starfish_Audio             = document.getElementById("Starfish"); 
+		var Calf_Raises_Audio          = document.getElementById("Calf_Raises"); 
+		var Side_To_Side_Audio         = document.getElementById("Side_To_Side"); 
+		var Run_Audio                  = document.getElementById("Run"); 
+		var Tricep_Extensions_Audio    = document.getElementById("Tricep_Extensions"); 
+		var Arm_Circles_Audio          = document.getElementById("Arm_Circles"); 
+		var Calf_And_Biceps_Audio      = document.getElementById("Calf_And_Biceps"); 
+		var Horse_Stance_Punches_Audio = document.getElementById("Horse_Stance_Punches"); 
 
 		//////////////////////////////////////////////////////////////
 
