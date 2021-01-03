@@ -293,11 +293,11 @@ body {
 						"Keep calm and bingo on",
 						"To Bingo and beyond",
 						"Let's make bingo great again",
-						"-Whee will ! Whee will ! bingo",
+						"Whee. will.  Whee. will.  bingo",
 						"Are you ready to Bingo",
 						"Peace, Love, and Bingo",
 						"Live and let Bingo",
-						"Feel da riddum, feel da rhyme, get on up, its bingo time",
+						"Feel da riddum. feel da rhyme. get on up. its bingo time",
 						"Only the Good play bingo"];
 	var readIntro = true;
 
@@ -306,6 +306,7 @@ body {
 //	fillLanguageDropdown(maxVoices, 1);
 	
 	var numDoubles = 0;
+	var lastBall = -100;
 
 	for (ball=0; ball < MAXBALLS; ball++){
 		balls[ball] = ball + 1;
@@ -367,7 +368,7 @@ body {
 
 	function speakPhrase(message,voice){
 
-		// # delay
+		// , delay
 		// + fast pitch
 		// - slow pitch
 
@@ -376,7 +377,7 @@ body {
 		var firstIndex = 0;
 
 		switch (message[0]) {
-				case '#':
+				case ',':
 		var silentMsg=new SpeechSynthesisUtterance("delay");
 		silentMsg.voice = voice;
 		silentMsg.volume = 0.0;
@@ -440,7 +441,29 @@ body {
 		if (tens == ones){
 			gotADouble(number);
 		}
+		else {
 
+			if (number == lastBall+1){
+				speak ("add one and you get");
+			}
+			if (number == lastBall-1){
+				speak ("subtract one and you get");
+			}
+			if (number == lastBall + lastBall){
+				speak ("double it and you get");
+			}else{
+			if (number + number == lastBall){
+				speak ("cut it in half and you get");
+			} else{
+			if (number == lastBall+10){
+				speak ("and right next door");
+			}
+			if (number+10 == lastBall){
+				speak ("and right next door");
+			}}}
+		}
+
+		lastBall = number;
 		trailMessage = "";
 
     	switch (number){
@@ -455,6 +478,9 @@ body {
 				break;
 			case 71:
 				speak("s r 71");
+				break;
+			case 64:
+				speak("64. Good Year");
 				break;
 			case 57:
 				speakOne("heinz 57","57 chevy");
@@ -472,7 +498,7 @@ body {
 				speak("area 51");
 				break;
 			case 50:
-				speak("hawaii 5 0");
+				speak("aloha. hawaii 5 0");
 				break;
 			case 45:
 				speak("45 rpms");
@@ -499,7 +525,7 @@ body {
 				speak("lucky number 13");
 				break;
 			case 11:
-				speak("chicken legs 11");
+				speakOne("poy yo. 11", "cluck cluck chicken legs 11");
 				break;
 			case 9:
 				speak("number 9");
@@ -546,6 +572,7 @@ body {
 		// speak out the number
 		speakNumber(balls[currentBall]);
         currentBall++;
+
 	}
 	
 	function fillLanguageDropdown(voices, defaultVoice){
